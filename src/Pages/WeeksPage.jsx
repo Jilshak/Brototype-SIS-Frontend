@@ -61,7 +61,7 @@ function WeeksPage() {
 
   useEffect(() => {
     if (weeks.state) {
-      setWeek(weeks.state.weeks)
+      setWeek(weeks?.state.weeks)
     }
   }, [weeks.state])
 
@@ -76,12 +76,12 @@ function WeeksPage() {
 
           <>
             {
-              !weeks.isLoading && weeks.state.weeks.length >= 1 ?
+              !weeks?.isLoading && weeks?.state.weeks?.length >= 1 ?
                 <>
                   <div className='lg:mx-[100px] relative lg:left-0 lg:bottom-6 xs:left-[-30px] md:mx-[70px] min-w-[400px] bg-[#303443] opacity-70 my-[20px] rounded-2xl'>
                     <div className='grid lg:mx-[50px] xs:mt-[60px] lg:grid-cols-6 md:grid-cols-3 gap-1.5 sm:grid-cols-3 xs:grid-cols-3'>
                       {
-                        !weeks.isLoading && weeks.state.weeks.length >= 1 ?
+                        !weeks?.isLoading && weeks?.state.weeks?.length >= 1 ?
 
                           <>
                             {

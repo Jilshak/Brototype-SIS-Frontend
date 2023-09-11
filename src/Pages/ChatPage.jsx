@@ -77,10 +77,10 @@ function ChatPage() {
               </div>
               <div>
                 {
-                  !userList.isLoading && decode && userList.state.length >= 1 ?
+                  !userList?.isLoading && decode && userList?.state?.length >= 1 ?
                     <div className='overflow-y-auto max-h-[460px]'>
                       {
-                        users.map((item) => {
+                        users?.map((item) => {
                           //for the user
                           if (decode.is_user && item.authenticated && !decode.is_advisor && !decode.is_reviewer && !decode.is_superuser) {
                             if (item.id !== decode.user_id && !item.is_reviewer && !item.is_superuser) {
@@ -175,7 +175,7 @@ function ChatPage() {
             :
             <>
               {
-                recentChats && recent.history.length >= 1 ?
+                recentChats && recent?.history.length >= 1 ?
                   <>
                     {
                       recentChats.map((item) => {
