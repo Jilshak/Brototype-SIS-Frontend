@@ -68,21 +68,38 @@ function ChattingPage() {
     useEffect(() => {
         let credential = user_id < selected_id ? `${user_id}_${selected_id}` : `${selected_id}_${user_id}`
         let room_id = `chat_${credential}`
+
+        // Define a variable to keep track of retry attempts
+        let retryAttempts = 0;
+        const maxRetries = 3; // Maximum number of retry attempts
+
         const createSocket = async () => {
-            console.log(decode)
             try {
                 const request = await new WebSocket(`${base}/ws/chat/${credential}/`)
+
                 request.onopen = async () => {
-                    await setSocket(request)
+                    await setSocket(request);
                 }
 
+                request.onclose = (event) => {
+                    if (event.code === 1006 && retryAttempts < maxRetries) {
+                        // If the connection closed with code 1006 (abnormal closure) and retries are allowed
+                        retryAttempts++;
+                        console.log(`Retry attempt ${retryAttempts}...`);
+                        setTimeout(createSocket, 1000); // Retry after 1 second
+                    } else {
+                        console.log("WebSocket connection closed.");
+                    }
+                }
             } catch (error) {
-                console.log("Error: ", error)
+                console.log("Error: ", error);
             }
         }
-        createSocket()
-        dispatch(UserMessages(room_id))
-    }, [])
+
+        createSocket();
+        dispatch(UserMessages(room_id));
+    }, []);
+
 
     //for the message loading
     useEffect(() => {
@@ -177,13 +194,19 @@ function ChattingPage() {
                                         })
                                     }
                                 </> :
-                                <div className='relative flex items-center top-80 justify-center'>
+                                <div className='flex items-center justify-center h-screen'>
                                     <div class="rounded-md h-12 w-12 border-4 border-t-4 border-blue-500 animate-spin absolute"></div>
                                 </div>
                         }
                     </div>
                     <div className="py-5 flex relative lg:mx-[300px] md:mx-[200px]">
                         <input
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    e.preventDefault(); 
+                                    handleSendMessage(); 
+                                }
+                            }}
                             onChange={(e) => setInput(e.target.value)}
                             className="w-full min-w-[350px] bg-[#0F121A] text-white pl-6 outline-none py-3  px-3 rounded-s-xl"
                             type="text"
