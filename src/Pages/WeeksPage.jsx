@@ -43,7 +43,7 @@ function WeeksPage() {
     navigate(-1)
   }
 
-  
+
 
   useEffect(() => {
     let token = localStorage.getItem("authToken")
@@ -85,19 +85,27 @@ function WeeksPage() {
               <div className='grid lg:mx-[50px]  xs:mt-[60px] lg:grid-cols-6 md:grid-cols-3 gap-1.5 sm:grid-cols-3 xs:grid-cols-3'>
 
                 {
-                  week ?
-                    week.map((item) => {
-                      return (
-                        <Link key={item.id} to={decode?.is_superuser || decode?.is_advisor || decode?.is_reviewer ? `/week_detail/${item.week_number}/${id}` : `/week_detail/${item.week_number}`}>
-                          <div className={` ${item.weekdetails_set[0].conducted_on && (item.weekdetails_set[0].Marks >= 7 ? 'bg-green-500' :
-                            (item.weekdetails_set[0].Marks < 7 && item.weekdetails_set[0].Marks >= 6 ? 'bg-yellow-500' : (item.weekdetails_set[0].Marks < 6 && item.weekdetails_set[0].Marks >= 5 ? 'bg-orange-500' : 'bg-blue-400')))} flex lg:lg:w-[110px] xs:w-[70px]items-center justify-center py-4 my-4 mx-6 rounded-xl bg-[#3E4257] text-white`}>
-                            <h1>Week {item.week_number}</h1>
-                          </div>
-                        </Link>
-                      )
-                    })
+                  !weeks.isLoading && weeks.state.weeks.length >= 1 ?
+                    <>
+                      {
+                        week ?
+                          week.map((item) => {
+                            return (
+                              <Link key={item.id} to={decode?.is_superuser || decode?.is_advisor || decode?.is_reviewer ? `/week_detail/${item.week_number}/${id}` : `/week_detail/${item.week_number}`}>
+                                <div className={` ${item.weekdetails_set[0].conducted_on && (item.weekdetails_set[0].Marks >= 7 ? 'bg-green-500' :
+                                  (item.weekdetails_set[0].Marks < 7 && item.weekdetails_set[0].Marks >= 6 ? 'bg-yellow-500' : (item.weekdetails_set[0].Marks < 6 && item.weekdetails_set[0].Marks >= 5 ? 'bg-orange-500' : 'bg-blue-400')))} flex lg:lg:w-[110px] xs:w-[70px]items-center justify-center py-4 my-4 mx-6 rounded-xl bg-[#3E4257] text-white`}>
+                                  <h1>Week {item.week_number}</h1>
+                                </div>
+                              </Link>
+                            )
+                          })
 
-                    : null
+                          : null
+                      }
+                    </> :
+                    <div className='relative flex items-center top-48 left-96 justify-center'>
+                      <div class="rounded-md h-12 w-12 border-4 border-t-4 border-blue-500 animate-spin absolute"></div>
+                    </div>
                 }
 
               </div>
@@ -112,7 +120,7 @@ function WeeksPage() {
                   <p className='mx-5'>Current Week : {count}</p>
                 </span>
                 <span className=' bg-[#232530] cursor-pointer my-2 flex items-center opacity-40 mx-5 rounded-lg'>
-                  <p className='mx-5'> Perfomance : {count === 1 ? <span className='text-purple-500'>Just Started</span> : (perfomance/(count-1) >= 7 ? <span className='text-green-500'>Excellent</span> : (perfomance/(count-1) >= 6 && perfomance/(count-1) < 7 ? <span className='text-yellow-500'>Good</span> : <span className='text-orange-500'>Avarage</span>))} </p>
+                  <p className='mx-5'> Perfomance : {count === 1 ? <span className='text-purple-500'>Just Started</span> : (perfomance / (count - 1) >= 7 ? <span className='text-green-500'>Excellent</span> : (perfomance / (count - 1) >= 6 && perfomance / (count - 1) < 7 ? <span className='text-yellow-500'>Good</span> : <span className='text-orange-500'>Avarage</span>))} </p>
                 </span>
                 <span className=' bg-[#232530] my-2 p-1 flex items-center opacity-40 mx-5 rounded-lg'>
                   <p className='mx-5 '>Weeks Remaining : {totlaWeeks - count}</p>
