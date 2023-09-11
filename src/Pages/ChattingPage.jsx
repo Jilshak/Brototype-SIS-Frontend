@@ -52,11 +52,11 @@ function ChattingPage() {
 
                 setMessages(prevMessages => {
                     if (!prevMessages) {
-                      return [message];
+                        return [message];
                     } else {
-                      return [...prevMessages, message];
+                        return [...prevMessages, message];
                     }
-                  });
+                });
 
             };
 
@@ -176,7 +176,10 @@ function ChattingPage() {
                                             )
                                         })
                                     }
-                                </> : null
+                                </> :
+                                <div className='relative flex items-center top-80 justify-center'>
+                                    <div class="rounded-md h-12 w-12 border-4 border-t-4 border-blue-500 animate-spin absolute"></div>
+                                </div>
                         }
                     </div>
                     <div className="py-5 flex relative lg:mx-[300px] md:mx-[200px]">
