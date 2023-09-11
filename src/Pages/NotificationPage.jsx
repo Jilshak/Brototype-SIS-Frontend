@@ -190,7 +190,10 @@ function NotificationPage() {
                           )
                         })
                       }
-                    </> : null
+                    </> :
+                    <div className='relative h-screen flex items-center top-[-60px] right-5 justify-center'>
+                      <div class="rounded-md h-12 w-12 border-4 border-t-4 border-blue-500 animate-spin absolute"></div>
+                    </div>
                 }
               </div>
 
