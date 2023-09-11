@@ -148,7 +148,7 @@ function Sidebar() {
                                     <li className='mb-8'>
                                         <span className='flex items-center justify-start max-w-[180px] p-2 opacity-70 rounded-2xl bg-[#272d43]'>
                                             <img className='h-12 rounded-full w-12 object-cover' src={user.sidebar.image ? user.sidebar.image : noprofile} alt="" />
-                                            <p className='text-white text-xl ms-4'>{(decode.username).toUpperCase()}</p>
+                                            <p className='text-white text-xl ms-4 truncate'>{(decode.username).toUpperCase()}</p>
                                         </span>
                                     </li>
                                 </> : null

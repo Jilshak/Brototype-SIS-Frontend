@@ -79,6 +79,7 @@ function SignUpPage() {
               <select onChange={(e) => setBatch(parseInt(e.target.value))} className="bg-black outline-none py-4 text-white sm:text-sm rounded-md  block w-full p-2.5  dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Batch" name="batch" id="batch">
                {
                 batches.data.map((item) => {
+                  <option>Select one from the below</option>
                   return (
                     <option value={item.batch_number}>BCK{item.batch_number}</option>
                   )
