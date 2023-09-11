@@ -201,7 +201,7 @@ function BatchStudentsPage() {
                                 </div>
 
                                 :
-                                null
+                                <p className='text-white'>Still loading...</p>
                         }
                     </div>
                 </>
