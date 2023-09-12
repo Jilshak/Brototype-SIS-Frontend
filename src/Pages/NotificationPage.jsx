@@ -134,6 +134,12 @@ function NotificationPage() {
               </div>
               <div className="py-5 bottom-0 flex absolute lg:mx-[300px] md:mx-[200px]">
                 <input
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      handleSendNotification();
+                    }
+                  }}
                   onChange={(e) => setInput(e.target.value)}
                   className="w-full max-w-[500px] lg:min-w-[500px] md:min-w-[400px] sm:min-w-[300px] xs:min-w-[300px] bg-[#0F121A] text-white pl-6 outline-none py-3  px-3 rounded-s-xl"
                   type="text"
