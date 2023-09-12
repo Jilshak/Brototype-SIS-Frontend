@@ -21,13 +21,11 @@ function NotificationPage() {
   const noti = useSelector((state) => (state.Chats))
 
   useEffect(() => {
-    console.log("This is the base url: ", base)
     let credential = decode.is_superuser ? `36_${selected}`
       : (decode.is_user && !decode.is_advisor && !decode.is_reviewer && !decode.is_superuser ? `36_1`
         : decode.is_user && decode.is_advisor && !decode.is_reviewer ? `36_2` : `36_3`)
     let room_id = `noti_${credential}`
     const createSocket = async () => {
-      console.log(decode)
       try {
         const request = await new WebSocket(`${base}/ws/notification/${credential}/`)
         await setSocket(request)
@@ -44,7 +42,6 @@ function NotificationPage() {
 
       socket.onmessage = async (event) => {
         const message = await JSON.parse(event.data);
-        console.log("This is the message: ", message)
 
         // Update messages in state and save to local storage
         setNotification(prevMessages => [...prevMessages, message])
@@ -82,8 +79,6 @@ function NotificationPage() {
           <>
             <div>
               <select onChange={(e) => {
-                console.log("This is the current selected value: ", selected)
-                console.log("This is the current event value: ", e.target.value)
                 setSelected(e.target.value)
               }} className='flex h-12 pl-7 border-0 text-[#dcdada] outline-none absolute right-0 m-3 rounded-xl lg:w-[250px] md:w-[175px] sm:w-[150px] xs:w-[90px] items-center justify-end bg-[#23283A]'>
                 <option className='truncate' value="0">SEND NOTIFICATIONS TO</option>

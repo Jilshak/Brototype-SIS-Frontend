@@ -9,13 +9,6 @@ export const UpdateDetailsOfUser = createAsyncThunk('update_details_of_user',
         try {
             const request = await api.patch(`/weeks/${week_id}/`, { completed: true })
             const response = await request.data
-
-            if (request.status === 200) {
-                console.log("The week detail has been completed proceed to the next week!!!")
-                console.log("Response: ", response)
-            } else {
-                console.log("Something went wrong while doing this")
-            }
         } catch (error) {
             console.log(error)
         }

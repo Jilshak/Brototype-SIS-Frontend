@@ -34,8 +34,6 @@ function WeekDetailPage() {
         if (decode) {
             setLoading(false)
             if (decode?.is_superuser || decode?.is_reviewer || decode?.is_advisor) {
-                console.log("Its entering here all right")
-                console.log(userid)
                 dispatch(ProfileDetails(userid))
             } else {
                 dispatch(ProfileDetails(decode?.user_id))
@@ -48,7 +46,6 @@ function WeekDetailPage() {
     useEffect(() => {
         if (weekDetails.state) {
             setWeekDetail(weekDetails.state.weeks)
-            console.log(weekDetail)
         }
     }, [weekDetails.state, dispatch])
 
@@ -76,8 +73,7 @@ function WeekDetailPage() {
             return item.week_number == id
         })
 
-        console.log("This is the week details: ", week_id.weekdetails_set[0])
-        console.log("This is the week details: ", week_id.weekdetails_set[0].week)
+
 
 
 
@@ -112,7 +108,6 @@ function WeekDetailPage() {
             progress: progress,
             feedback: feedback
         }
-        console.log(seminar, progress, feedback)
         await Promise.resolve(dispatch(WeekDetailsUser(credentials)))
         setToggle1(false)
     }
@@ -132,7 +127,6 @@ function WeekDetailPage() {
             typing: typing,
         }
 
-        console.log(credentials)
 
         await Promise.resolve(dispatch(WeekDetailsUser({ ...credentials })))
 
@@ -153,7 +147,6 @@ function WeekDetailPage() {
         }
         await Promise.resolve(dispatch(WeekDetailsUser(credentials)))
 
-        console.log(credentials)
 
 
         setToggle3(false)

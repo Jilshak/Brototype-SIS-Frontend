@@ -11,8 +11,6 @@ export const Batches = createAsyncThunk('batches',
             const response = await request.data
             if (request.status === 200) {
                 return response
-            } else {
-                return console.log("Something went wrong!!!")
             }
         } catch (error) {
             console.log("Error: ", error)
@@ -26,12 +24,6 @@ export const createBatch = createAsyncThunk('create_batch',
         try {
             const request = api.post(`/batches/`, credentials)
             const response = await request.data
-
-            if ((await request).status === 201) {
-                console.log('the batch has been created')
-            } else {
-                console.log("something went wrong while creating the batch")
-            }
         }catch(error){
             console.log("Error: ", error)
         }
@@ -55,9 +47,6 @@ export const deleteBatch = createAsyncThunk('delete_batch',
                         await api.delete(`api/users/${i}/`)
                     }
                 }
-                console.log('the batch has been deleted')
-            } else {
-                console.log("something went wrong while creating the batch")
             }
         }catch(error){
             console.log("Error: ", error)

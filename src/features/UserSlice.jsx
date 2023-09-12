@@ -11,10 +11,8 @@ export const Register = createAsyncThunk('register',
         const batchAssign = await api.get(`/batches/`).then(res => {
             const matchingBatch = res.data.find(x => x.batch_number === credentials.batch);
             if (matchingBatch) {
-                console.log("This is being called here which means it should work as expected!!!")
                 return matchingBatch.id;
             } else {
-                console.log("its not working as expected something went wrong !!")
                 return null;
             }
         });
@@ -24,9 +22,7 @@ export const Register = createAsyncThunk('register',
 
         const request = await api.post(`/users/`, credentials)
         const response = request.data
-        console.log(credentials)
         if (request.status === 201) {
-            console.log(response)
             return console.log("The user has been created")
         } else {
             return console.log("Something went wrong!!! And the user has not been created")
@@ -37,14 +33,26 @@ export const Register = createAsyncThunk('register',
 //the register functionality of the advisor/reviewers
 export const Register_Staff = createAsyncThunk('register',
     async (credentials) => {
-        console.log(credentials)
         const request = await api.post(`/users/`, credentials)
         const response = request.data
         if (request.status === 201) {
-
-            return console.log("The Staff has been created")
+            await Swal.fire(
+                {
+                    background: '#191C24',
+                    icon: 'success',
+                    title: 'Account Created!',
+                    text: "Your account has been created!!",
+                }
+            )
         } else {
-            return console.log("Something went wrong while creating the staff")
+            await Swal.fire(
+                {
+                    background: '#191C24',
+                    icon: 'error',
+                    title: 'Account Not Created!!',
+                    text: "Something went wrong while creating the Account Please try again",
+                }
+            )
         }
     }
 )
@@ -64,9 +72,15 @@ export const Login = createAsyncThunk('login',
                     text: "Welcome!!",
                 }
             )
-            console.log("The user has been authenticated and can login")
         } else {
-            console.log("The user is not authenticated and can't login")
+            await Swal.fire(
+                {
+                    background: '#191C24',
+                    icon: 'error',
+                    title: 'LogIn Failed!!',
+                    text: "Invalid Credentials!! Please try again",
+                }
+            )
         }
     }
 )

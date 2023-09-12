@@ -26,9 +26,7 @@ function BatchStudentsPage() {
         if (loading) {
             if (Interns.state) {
                 setList(Interns.state)
-                console.log(list)
                 if (list?.length > 0) {
-                    console.log('the list is loaded')
                     setLoading(false)
                 }
             } else {
@@ -81,7 +79,6 @@ function BatchStudentsPage() {
 
 
     const edit_user = () => {
-        console.log("This is being clicked")
         let credentials = {
             id: userid,
             username: username,

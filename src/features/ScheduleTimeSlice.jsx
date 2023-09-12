@@ -27,7 +27,6 @@ export const ReviewerTimeAssigned = createAsyncThunk('reviewer_time_assigned',
             const response = (await request).data
             if ((await request).status == 200) {
                 let data = await response.filter((item) => item.user == id && !item.booked)
-                console.log(data)
                 return data
             }
         } catch (error) {
@@ -40,11 +39,9 @@ export const ReviewerTimeAssigned = createAsyncThunk('reviewer_time_assigned',
 export const InternsWithReview = createAsyncThunk('interns_with_review',
     async (week) => {
         try {
-            console.log("Week number: ", week)
             const request = await api.get(`/users/`)
             const response = await request.data
             if (request.status === 200) {
-                console.log("This is the intial list: ", response)
                 let desired = response.filter((item) => !item.is_superuser && !item.is_advisor && !item.is_reviewer && !item.review_scheduled && item.review_in <= 7)
                 let a = desired.filter((x) => {
                     if (week > 1) {
@@ -77,7 +74,6 @@ export const Scheduled = createAsyncThunk('scheduled',
             const request = await api.patch(`/users/${id}/`, { review_scheduled: true })
             const response = await request.data
             if (request.status === 200) {
-                console.log(response)
                 return response
             } else {
                 console.log("Something weng wrong while fethinc the scheduled data")
@@ -95,7 +91,6 @@ export const unSchedule = createAsyncThunk('unshedule',
             const request = await api.patch(`/users/${id}/`, { review_scheduled: false })
             const response = await request.data
             if (request.status === 200) {
-                console.log(response)
                 return response
             } else {
                 console.log("Something weng wrong while fethinc the scheduled data")
@@ -113,12 +108,8 @@ export const removeBooking = createAsyncThunk('remove_booking',
             const request = await api.delete(`/booking/${data.booking_id}/`)
             const response = await request.data
             if (request.status === 204) {
-                console.log(response)
                 const req = await api.patch(`/timeslot/${data.slot_id}/`, { booked: false })
                 const res = await req.data
-                if (req.status == 200) {
-                    console.log("It is successful: ", res)
-                }
             } else {
                 console.log("Something weng wrong while fethinc the scheduled data")
             }
@@ -133,8 +124,6 @@ export const removeBooking = createAsyncThunk('remove_booking',
 export const ScheduledTimeforAdvisor = createAsyncThunk('scheduled_time_for_advisor',
     async (id) => {
         try {
-            console.log("This is being called!!!")
-            console.log(id)
             const request = await api.get(`/booking/`)
             const response = await request.data
             if (request.status === 200) {
@@ -145,7 +134,6 @@ export const ScheduledTimeforAdvisor = createAsyncThunk('scheduled_time_for_advi
                 const res = await req.data
                 if (req.status === 200) {
                     let desired = res.filter((item) => value.includes(item.id))
-                    console.log("This is the data that you are looking for: ", data, desired)
                     return { data, desired }
                 }
             }

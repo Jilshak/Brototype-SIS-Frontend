@@ -51,7 +51,6 @@ function Profile() {
 
 
   const edit_user = async () => {
-    console.log("This is being clicked")
     let credentials = {
       id: userid,
       username: username,

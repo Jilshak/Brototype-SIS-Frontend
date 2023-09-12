@@ -5,20 +5,11 @@ import api from '../services/Axios'
 export const book = createAsyncThunk('booking',
     async (credentials) => {
         try {
-            console.log(credentials)
             const request = await api.post(`/booking/`, credentials)
             const response = await request.data
             if (request.status === 201) {
                 const request = await api.patch(`/timeslot/${credentials.slot}/`, {booked: true})
-                const res = await request.data
-                if (request.status === 200) {
-                    console.log(res)
-                } else {
-                    console.log("Something happened while updating the data")
-                }
-                console.log(response)
-            } else {
-                console.log("Something went wrong while the booking is being processed")
+                const res = await request.data   
             }
         } catch (error) {
             console.log("Error: ", error)
@@ -31,7 +22,6 @@ export const book = createAsyncThunk('booking',
 export const TimeBooked = createAsyncThunk('booked_time',
     async (id) => {
         try {
-            console.log("it is called")
             const request = await api.get(`/timeslot/`)
             const response = await request.data
             if (request.status === 200) {
@@ -46,8 +36,6 @@ export const TimeBooked = createAsyncThunk('booked_time',
                 if (second_request.status === 200) {
                     let desired = second_response.filter((item) => value.includes(item.slot))
                     return { slots, desired }
-                } else {
-                    console.log("No such data exists")
                 }
             }
         } catch (error) {

@@ -5,7 +5,6 @@ import api from '../services/Axios'
 //for editing the week details of the user - only for the admin and the advisors and reviewers
 export const WeekDetailsUser = createAsyncThunk('weekdetails',
     async (credentials) => {
-        console.log(credentials)
         const filteredCredentials = Object.fromEntries(
             Object.entries(credentials).filter(([_, value]) => value !== null)
         );
@@ -13,7 +12,6 @@ export const WeekDetailsUser = createAsyncThunk('weekdetails',
             const request = api.patch(`/week_details/${credentials.id}/`, filteredCredentials)
             const response = (await request).data
             if ((await request).status === 200) {
-                // console.log(response)
                 return response
             } else {
                 console.log("Something went wrong while doing this!!!!")
@@ -30,14 +28,11 @@ export const WeekDetailsUser = createAsyncThunk('weekdetails',
 export const get_week_task = createAsyncThunk('get_week_task',
     async (credentials) => {
         try {
-            console.log("Its is entering here!!")
             const request = await api.get(`/weeks/`)
             const response = request.data
             if (request.status == 200) {
                 let data = await response.filter((item) => item.user == credentials.userid && item.week_number == credentials.week_id)
-                console.log(data)
                 return data[0].weekdetails_set[0].this_weeks_tasks
-                // return data
             } else {
                 console.log("Something went wrong while uploading the file")
             }
@@ -52,21 +47,12 @@ export const get_week_task = createAsyncThunk('get_week_task',
 export const This_weeks_task = createAsyncThunk('this_weeks_task',
     async (credentials) => {
         try {
-            console.log("Its is entering here!!")
-            // console.log(id)
             const request = await api.get(`/weeks/`)
             const response = request.data
             if (request.status == 200) {
                 let data = response.filter((item) => item.user == credentials.userid && item.week_number == credentials.week_id)
-                console.log(data[0].weekdetails_set[0].id)
                 const req = await api.patch(`/week_details/${data[0].weekdetails_set[0].id}/`, credentials?.this_weeks_tasks)
                 const res = req.data
-                if (req.status == 200) {
-                    console.log("The file has been uploaded")
-                    console.log(res)
-                } else {
-                    console.log("Something went wrong while uploading the data ")
-                }
             } else {
                 console.log("Something went wrong while uploading the file")
             }
@@ -80,20 +66,12 @@ export const This_weeks_task = createAsyncThunk('this_weeks_task',
 export const removeThisWeekTask = createAsyncThunk('remove_this_week_task',
     async (credentials) => {
         try {
-            console.log("Its is entering here!!")
             const request = await api.get(`/weeks/`)
             const response = request.data
             if (request.status == 200) {
                 let data = response.filter((item) => item.user == credentials.userid && item.week_number == credentials.week_id)
-                console.log(data[0].weekdetails_set[0].id)
                 const req = await api.patch(`/week_details/${data[0].weekdetails_set[0].id}/`, { this_weeks_tasks: credentials.this_weeks_tasks })
                 const res = req.data
-                if (req.status == 200) {
-                    console.log("The file has been uploaded")
-                    console.log(res)
-                } else {
-                    console.log("Something went wrong while uploading the data ")
-                }
             } else {
                 console.log("Something went wrong while uploading the file")
             }
@@ -115,14 +93,11 @@ export const removeThisWeekTask = createAsyncThunk('remove_this_week_task',
 export const get_technical_tasks = createAsyncThunk('get_technical_tasks',
     async (credentials) => {
         try {
-            console.log("Its is entering here!!")
             const request = await api.get(`/weeks/`)
             const response = request.data
             if (request.status == 200) {
                 let data = await response.filter((item) => item.user == credentials.userid && item.week_number == credentials.week_id)
-                console.log(data)
                 return data[0]?.weekdetails_set[0]?.technical_tasks
-                // return data
             } else {
                 console.log("Something went wrong while uploading the file")
             }
@@ -138,18 +113,10 @@ export const technical_tasks = createAsyncThunk('technical_tasks',
         try {
             const request = await api.get(`/weeks/`)
             const response = request.data
-            console.log("This is the initial response: ", response)
             if (request.status == 200) {
                 let data = response.filter((item) => item.user == credentials.userid && item.week_number == credentials.week_id)
-                console.log("This is the data: ", data)
-                console.log(data[0].weekdetails_set[0].id)
                 const req = await api.patch(`/week_details/${data[0].weekdetails_set[0].id}/`, credentials?.technical_tasks)
                 const res = req.data
-                if (req.status == 200) {
-                    console.log(res)
-                } else {
-                    console.log("Something went wrong while uploading the data ")
-                }
             } else {
                 console.log("Something went wrong while uploading the file")
             }
@@ -164,20 +131,12 @@ export const technical_tasks = createAsyncThunk('technical_tasks',
 export const removeTechnicalTask = createAsyncThunk('remove_technical_task',
     async (credentials) => {
         try {
-            console.log("Its is entering here!!")
             const request = await api.get(`/weeks/`)
             const response = request.data
             if (request.status == 200) {
                 let data = response.filter((item) => item.user == credentials.userid && item.week_number == credentials.week_id)
-                console.log(data[0].weekdetails_set[0].id)
                 const req = await api.patch(`/week_details/${data[0].weekdetails_set[0].id}/`, { technical_tasks: credentials.technical_tasks })
                 const res = req.data
-                if (req.status == 200) {
-                    console.log("The file has been uploaded")
-                    console.log(res)
-                } else {
-                    console.log("Something went wrong while uploading the data ")
-                }
             } else {
                 console.log("Something went wrong while uploading the file")
             }
@@ -201,14 +160,11 @@ export const removeTechnicalTask = createAsyncThunk('remove_technical_task',
 export const get_personal_tasks = createAsyncThunk('get_technical_tasks',
     async (credentials) => {
         try {
-            console.log("Its is entering here!!")
             const request = await api.get(`/weeks/`)
             const response = request.data
             if (request.status == 200) {
                 let data = await response.filter((item) => item.user == credentials.userid && item.week_number == credentials.week_id)
-                console.log(data)
                 return data[0]?.weekdetails_set[0]?.personal_tasks
-                // return data
             } else {
                 console.log("Something went wrong while uploading the file")
             }
@@ -224,18 +180,10 @@ export const personal_tasks = createAsyncThunk('technical_tasks',
         try {
             const request = await api.get(`/weeks/`)
             const response = request.data
-            console.log("This is the initial response: ", response)
             if (request.status == 200) {
                 let data = response.filter((item) => item.user == credentials.userid && item.week_number == credentials.week_id)
-                console.log("This is the data: ", data)
-                console.log(data[0].weekdetails_set[0].id)
                 const req = await api.patch(`/week_details/${data[0].weekdetails_set[0].id}/`, credentials?.personal_tasks)
                 const res = req.data
-                if (req.status == 200) {
-                    console.log(res)
-                } else {
-                    console.log("Something went wrong while uploading the data ")
-                }
             } else {
                 console.log("Something went wrong while uploading the file")
             }
@@ -250,20 +198,12 @@ export const personal_tasks = createAsyncThunk('technical_tasks',
 export const removePersonalTasks = createAsyncThunk('remove_technical_task',
     async (credentials) => {
         try {
-            console.log("Its is entering here!!")
             const request = await api.get(`/weeks/`)
             const response = request.data
             if (request.status == 200) {
                 let data = response.filter((item) => item.user == credentials.userid && item.week_number == credentials.week_id)
-                console.log(data[0].weekdetails_set[0].id)
                 const req = await api.patch(`/week_details/${data[0].weekdetails_set[0].id}/`, { personal_tasks: credentials.personal_tasks })
                 const res = req.data
-                if (req.status == 200) {
-                    console.log("The file has been uploaded")
-                    console.log(res)
-                } else {
-                    console.log("Something went wrong while uploading the data ")
-                }
             } else {
                 console.log("Something went wrong while uploading the file")
             }
@@ -288,14 +228,11 @@ export const removePersonalTasks = createAsyncThunk('remove_technical_task',
 export const get_miscellenous_tasks = createAsyncThunk('get_technical_tasks',
     async (credentials) => {
         try {
-            console.log("Its is entering here!!")
             const request = await api.get(`/weeks/`)
             const response = request.data
             if (request.status == 200) {
                 let data = await response.filter((item) => item.user == credentials.userid && item.week_number == credentials.week_id)
-                console.log(data)
                 return data[0]?.weekdetails_set[0]?.miscellenous_tasks
-                // return data
             } else {
                 console.log("Something went wrong while uploading the file")
             }
@@ -311,18 +248,10 @@ export const miscellenous_tasks = createAsyncThunk('technical_tasks',
         try {
             const request = await api.get(`/weeks/`)
             const response = request.data
-            console.log("This is the initial response: ", response)
             if (request.status == 200) {
                 let data = response.filter((item) => item.user == credentials.userid && item.week_number == credentials.week_id)
-                console.log("This is the data: ", data)
-                console.log(data[0].weekdetails_set[0].id)
                 const req = await api.patch(`/week_details/${data[0].weekdetails_set[0].id}/`, credentials?.miscellenous_tasks)
                 const res = req.data
-                if (req.status == 200) {
-                    console.log(res)
-                } else {
-                    console.log("Something went wrong while uploading the data ")
-                }
             } else {
                 console.log("Something went wrong while uploading the file")
             }
@@ -337,20 +266,12 @@ export const miscellenous_tasks = createAsyncThunk('technical_tasks',
 export const removeMiscellenousTasks = createAsyncThunk('remove_technical_task',
     async (credentials) => {
         try {
-            console.log("Its is entering here!!")
             const request = await api.get(`/weeks/`)
             const response = request.data
             if (request.status == 200) {
                 let data = response.filter((item) => item.user == credentials.userid && item.week_number == credentials.week_id)
-                console.log(data[0].weekdetails_set[0].id)
                 const req = await api.patch(`/week_details/${data[0].weekdetails_set[0].id}/`, { miscellenous_tasks: credentials.miscellenous_tasks })
                 const res = req.data
-                if (req.status == 200) {
-                    console.log("The file has been uploaded")
-                    console.log(res)
-                } else {
-                    console.log("Something went wrong while uploading the data ")
-                }
             } else {
                 console.log("Something went wrong while uploading the file")
             }

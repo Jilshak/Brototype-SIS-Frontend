@@ -11,7 +11,6 @@ export const GetAssignedTime = createAsyncThunk('get_assigned_time',
             const response = (await request).data
             if ((await request).status === 200) {
                 let time = await response.filter((item) => item.user == id && !item.booked)
-                console.log(time)
                 return time
             }
         } catch (error) {
@@ -26,11 +25,6 @@ export const AddTime = createAsyncThunk('add_time',
         try{
             const request = api.post(`/timeslot/`, credentials)
             const response = (await request).status
-            if ((await request).status === 201){
-                console.log("The new time is added")
-            }else{
-                console.log("The new time not added")
-            }
         }catch(error){
             console.log("Error: ", error)
         }
@@ -43,11 +37,6 @@ export const deleteTime = createAsyncThunk('delete_time',
         try{
             const request = api.delete(`/timeslot/${id}/`)
             const response = (await request).status
-            if ((await request).status === 204){
-                console.log("The new time is deleted")
-            }else{
-                console.log("The new time not deleted")
-            }
         }catch(error){
             console.log("Error: ", error)
         }

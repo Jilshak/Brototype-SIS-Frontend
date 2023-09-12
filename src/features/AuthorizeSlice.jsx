@@ -9,7 +9,6 @@ export const UnauthorizedIntern = createAsyncThunk('unauthorized_intern',
             const response = (await request).data
 
             if ((await request).status === 200) {
-                console.log(response)
                 return response
             }
         } catch (error) {
@@ -28,10 +27,7 @@ export const authorize = createAsyncThunk('authorize',
             const request = api.patch(`/users/${id}/`,data)
             const response = (await request).data
             if ((await request).status === 200){
-                console.log("The authentication of the user is done and now have the functionality")
                 return response
-            }else{
-                console.log("Something went wrong while authenticating the user try again !!!")
             }
         }catch(error){
             console.log("Error:", error)
@@ -45,13 +41,6 @@ export const unauthorized = createAsyncThunk('unauthorized',
         try{
             const request = await api.delete(`/users/${id}/`)
             const response = request.data
-            if (request.status == 200){
-                console.log("The user has been deleted")
-                return
-            }else{
-                console.log("Something went wrong while deleting the user")
-                return
-            }
         }catch(error){
             console.log("Error: ", error)
         }

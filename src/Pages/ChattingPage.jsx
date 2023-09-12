@@ -48,7 +48,6 @@ function ChattingPage() {
 
             socket.onmessage = async (event) => {
                 const message = await JSON.parse(event.data);
-                console.log("This is the message: ", message)
 
                 setMessages(prevMessages => {
                     if (!prevMessages) {
@@ -85,7 +84,6 @@ function ChattingPage() {
                     if (event.code === 1006 && retryAttempts < maxRetries) {
                         // If the connection closed with code 1006 (abnormal closure) and retries are allowed
                         retryAttempts++;
-                        console.log(`Retry attempt ${retryAttempts}...`);
                         setTimeout(createSocket, 1000); // Retry after 1 second
                     } else {
                         console.log("WebSocket connection closed.");

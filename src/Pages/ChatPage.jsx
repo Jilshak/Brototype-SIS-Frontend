@@ -60,7 +60,6 @@ function ChatPage() {
 
   useEffect(() => {
     if (recent?.history?.length >= 1) {
-      console.log("This is the recentChats: ", recentChats)
       setRecentChats(recent.history)
     }
   }, [recent?.history, dispatch])

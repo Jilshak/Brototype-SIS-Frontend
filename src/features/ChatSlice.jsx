@@ -8,13 +8,8 @@ export const UserMessages = createAsyncThunk('user_messages',
             const request = await api.get(`/chat/messages/`)
             const response = request.data
             if (request.status === 200) {
-                console.log("The message list has been loaded")
                 let data = await response.filter((item) => item.thread_name == room_id)
-                console.log("This is the data: ", data)
                 return data
-
-            } else {
-                console.log("Something happened while getting the messages!!")
             }
         } catch (error) {
             console.log("Error: ", error)
@@ -31,8 +26,6 @@ export const GetChattingUsers = createAsyncThunk('get_chatting_user',
             if ((await request).status === 200) {
                 let data = response.filter((user) => user.id == credential.user || credential.reciever)
                 return data
-            } else {
-                console.log("Something wrong occured while fetching the users data from the endpoint")
             }
         } catch (error) {
             console.log(error)
@@ -55,8 +48,6 @@ export const GetHistory = createAsyncThunk('get_history',
                 reciever_ids.push(id)
                 let sender_ids = data.map((item) => item.sender)
                 let uniqueIds = [...new Set([...reciever_ids, ...sender_ids])];
-                console.log("This is the getHistory user data: ", data)
-                console.log("These are the receiver ids: ", reciever_ids)
                 const req = await api.get(`/users/`)
                 const res = req.data
                 if (req.status === 200) {
@@ -77,7 +68,6 @@ export const GetHistory = createAsyncThunk('get_history',
                         return timestampB - timestampA;
                     });
 
-                    console.log("This is the getHistory user data1: ", final)
                     return final
 
                 }
@@ -100,7 +90,6 @@ export const getNotifications = createAsyncThunk('get_notification',
                 const res = await req.data
                 if (req.status === 200) {
                     let joining_date = await res.date_joined
-                    console.log("This is the res from the notification slice: ", res)
 
                     if (res?.authenticated && decode.is_user &&  !decode.is_advisor && !decode.is_reviewer && !decode.is_superuser) {
                         let data = response.filter((item) => (item.thread_name == 'noti_36_1' && item.timestamp > joining_date) || (item.thread_name == 'noti_36_123' && item.timestamp > joining_date) )

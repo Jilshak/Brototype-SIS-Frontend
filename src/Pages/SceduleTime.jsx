@@ -57,7 +57,6 @@ function SceduleTime() {
       advisor: decode.user_id,
       slot: slotId
     }
-    console.log(credentials)
     await dispatch(book(credentials))
     setToggle(false)
   }
@@ -166,8 +165,6 @@ function SceduleTime() {
                 </div>
                 <select onChange={async (e) => {
                   await dispatch(ReviewerTimeAssigned(e.target.value))
-
-                  console.log('Reviewer id: ', e.target.value)
                 }} className='h-[30px] mx-[30px] w-[300px] bg-[#303443] lg:mb-0 xs:mb-3 text-white rounded-md outline-none '>
                   <option selected>Select the Reviewer</option>
                   {
@@ -185,7 +182,6 @@ function SceduleTime() {
                   }
                 </select>
                 <select onChange={(e) => {
-                  console.log('Slot id: ', e.target.value)
                   setSlotId(e.target.value)
                 }} className='h-[30px] mx-[30px] w-[300px] bg-[#303443] lg:my-3 mb-3 text-white rounded-md outline-none '>
                   <option selected>Select the Time</option>
@@ -207,11 +203,8 @@ function SceduleTime() {
                   <button onClick={async (e) => {
                     await dispatchBook()
                     await dispatch(Scheduled(user.id))
-                    console.log("This is the user id: ", user.id)
                     if (intern) {
-                      console.log("Its entering this block")
                       setIntern(prevList => prevList.filter(item => item.id !== user.id))
-                      console.log("After the filtering mechanism: ", intern)
                       await Promise.resolve(dispatch(ScheduledTimeforAdvisor(decode.user_id)))
                     }
                   }} className='bg-blue-600 hover:bg-blue-500 rounded-lg mx-3 px-8 py-2 w-[120px]'>
@@ -234,7 +227,6 @@ function SceduleTime() {
             {item ? (
               <>
                 {item.map((val, index) => {
-                  console.log("This is the item: ", val)
                   let data = null;
 
                   // Using forEach to iterate through the timeslots and find the matching one
@@ -276,24 +268,20 @@ function SceduleTime() {
                       </span>
 
                       <div onClick={async (e) => {
-                        console.log("This is the val: ", val)
-                        console.log(val.slot)
                         await unsheduleReview(val.id, val.intern, val.slot)
                         await dispatch(InternsWithReview(week_numnber))
-                        // console.log("This is the scheduled date: ", scheduledDate)
-                        // console.log("This is the scheduled date and the current date difference in minutes: ", differenceInMinutes)
                       }} className='cursor-pointer'>
                         <img className='h-6 cursor-pointer' src={remove} alt="" />
                       </div>
                       <div>
                         {
-                          // currentDate == scheduledDate && differenceInMinutes <= -15 ?
+                          currentDate == scheduledDate && differenceInMinutes <= -15 ?
                           <>
                             <Link to={`/weeks/${val.intern}`}>
                               <img className='h-6 cursor-pointer' src={authenticated} alt="" />
                             </Link>
                           </>
-                          // : null
+                          : null
                         }
                       </div>
                     </div>
