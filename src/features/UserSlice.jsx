@@ -63,7 +63,6 @@ export const Login = createAsyncThunk('login',
         const request = await api.post(`/token/`, credentials)
         const response = await request.data
         if (request.status === 200) {
-            localStorage.setItem('authToken', JSON.stringify(response.access))
             await Swal.fire(
                 {
                     background: '#191C24',
@@ -72,6 +71,7 @@ export const Login = createAsyncThunk('login',
                     text: "Welcome!!",
                 }
             )
+            localStorage.setItem('authToken', JSON.stringify(response.access))
         } else {
             await Swal.fire(
                 {
