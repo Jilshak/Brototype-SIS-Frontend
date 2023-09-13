@@ -3,6 +3,8 @@ import header from '../images/header.webp'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Register_Staff } from '../features/UserSlice'
+import Swal from 'sweetalert2'
+
 
 
 function SignUpPageStaff() {
@@ -15,6 +17,7 @@ function SignUpPageStaff() {
   const [password1, setPassword1] = useState('')
 
 
+
   let dispatch = useDispatch()
   let navigate = useNavigate()
 
@@ -25,7 +28,14 @@ function SignUpPageStaff() {
   const handleSubmit = async (e) => {
 
     if (!password === password1) {
-      alert("The passwords doesn't match one another")
+      await Swal.fire(
+        {
+          background: '#191C24',
+          icon: 'error',
+          title: 'Wrong Passwords',
+          text: "Your Passwords doesn't match one another!",
+        }
+      )
     } else {
 
       let x = false
@@ -84,13 +94,10 @@ function SignUpPageStaff() {
               <input onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="password" className="bg-black outline-none py-4 text-white sm:text-sm rounded-md  block w-full p-2.5  dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Password" required="" />
             </div>
             <div>
-              <input onChange={ async (e) => {
+              <input onChange={async (e) => {
                 setPassword1(e.target.value)
                 password == password1 ? await setPToggle(false) : await setPToggle(true)
               }} type="password" name="password1" id="password1" className="bg-black outline-none py-4 text-white sm:text-sm rounded-md  block w-full p-2.5  dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Confirm Password" required="" />
-              {
-                Ptoggle ? <small className='text-red-400 text-xs absolute'>The passwrods doesn't match one another!!</small> : null
-              }
             </div>
 
             <button type="submit" className="w-full py-4 text-white bg-[#EB1616] text-[18px] font-medium rounded-lg text-sm px-5  text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign Up</button>
