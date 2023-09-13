@@ -275,7 +275,7 @@ function AssignMyTimePage() {
                         <img className='h-6 cursor-pointer' src={remove} alt="" />
                       </div>
                       {
-                        // isToday && quarterHour ?
+                        isToday && quarterHour ?
                         <>
                           <div onClick={(e) => {
                             console.log("This is the val: ", val)
@@ -287,7 +287,7 @@ function AssignMyTimePage() {
                             </Link>
                           </div>
                         </>
-                        // :null
+                        :null
                       }
                     </div>
                   );
