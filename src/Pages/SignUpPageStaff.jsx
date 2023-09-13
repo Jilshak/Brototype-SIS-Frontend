@@ -27,7 +27,7 @@ function SignUpPageStaff() {
 
   const handleSubmit = async (e) => {
 
-    if (!password === password1) {
+    if (password != password1) {
       await Swal.fire(
         {
           background: '#191C24',

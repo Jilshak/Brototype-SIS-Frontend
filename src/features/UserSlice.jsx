@@ -72,6 +72,7 @@ export const Login = createAsyncThunk('login',
                 }
             )
             localStorage.setItem('authToken', JSON.stringify(response.access))
+            
         } else {
             await Swal.fire(
                 {
